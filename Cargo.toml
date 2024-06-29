@@ -1,0 +1,9 @@
+[package]
+name = "rubula"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+jsonschema = { verison = "0.18.0", features = ["resolve-file"] }
+serde_json = { verison = "1.0.118", features = ["std"] }
+serde_yaml = "0.9.34"
