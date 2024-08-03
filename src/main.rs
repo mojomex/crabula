@@ -6,8 +6,8 @@ use std::{
 use jsonschema::JSONSchema;
 use serde_json::{json, Value};
 
-const CONFIG_DIR: &str = "/home/maximilianschmeller/rubula/config";
-const SCHEMA_DIR: &str = "/home/maximilianschmeller/rubula/schema";
+const CONFIG_DIR: &str = "/home/maximilianschmeller/crabula/config";
+const SCHEMA_DIR: &str = "/home/maximilianschmeller/crabula/schema";
 
 fn main() {
     let sensor_model = "OT128";

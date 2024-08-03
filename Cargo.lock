@@ -220,6 +220,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b6a852b24ab71dffc585bcb46eaf7959d175cb865a7152e35b348d1b2960422"
 
 [[package]]
+name = "crabula"
+version = "0.1.0"
+dependencies = [
+ "jsonschema",
+ "serde_json",
+ "serde_yaml",
+]
+
+[[package]]
 name = "deranged"
 version = "0.3.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -849,15 +858,6 @@ dependencies = [
  "wasm-bindgen-futures",
  "web-sys",
  "winreg",
-]
-
-[[package]]
-name = "rubula"
-version = "0.1.0"
-dependencies = [
- "jsonschema",
- "serde_json",
- "serde_yaml",
 ]
 
 [[package]]
