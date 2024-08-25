@@ -1,26 +1,33 @@
-/**:
-  ros__parameters:
-    host_ip: 255.255.255.255
-    sensor_ip: 192.168.1.201
-    data_port: 2368
-    gnss_port: 10110
-    packet_mtu_size: 1500
-    launch_hw: true
-    setup_sensor: true
-    frame_id: hesai
-    diag_span: 1000
-    min_range: 0.3
-    max_range: 300.0
-    cloud_min_angle: 0
-    cloud_max_angle: 360
-    scan_phase: 0.0
-    sensor_model: Pandar128E4X
-    calibration_file: $(find-pkg-share nebula_decoders)/calibration/hesai/$(var sensor_model).csv
-    rotation_speed: 600
-    return_mode: Dual
-    ptp_profile: automotive
-    ptp_domain: 0
-    ptp_transport_type: L2
-    ptp_switch_type: TSN
-    retry_hw: true
-    dual_return_distance_threshold: 0.1
+# Network
+host_ip: 255.255.255.1
+sensor_ip: 192.168.1.201
+data_port: 2368
+gnss_port: 10110
+packet_mtu_size: 1500
+
+# Sync
+ptp_profile: 
+  AUTOMOTIVE:
+    network_supports_tsn: true
+    domain: 0
+
+# Backbone
+sensor_model: Pandar128E4X
+launch_hw: true
+retry_hw: true
+setup_sensor: true
+
+# ROS Output
+frame_id: hesai
+diag_span: 1000
+
+# Pointcloud
+min_range: 0.3
+max_range: 300.0
+fov_start_deg: 0
+fov_end_deg: 360
+sync_angle_deg: 0.0
+cut_angle_deg: 0.0
+frame_rate_hz: 10
+dual_return_distance_threshold: 0.1
+return_mode: LastStrongest

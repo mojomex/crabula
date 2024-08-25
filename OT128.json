@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Config",
+  "type": "object",
+  "properties": {
+    "cut_angle_deg": {
+      "type": "number",
+      "format": "float",
+      "maximum": 360,
+      "minimum": 0
+    },
+    "data_port": {
+      "type": "integer",
+      "format": "uint16",
+      "minimum": 0
+    },
+    "fov_end_deg": {
+      "type": "number",
+      "format": "float",
+      "maximum": 360,
+      "minimum": 0
+    },
+    "fov_start_deg": {
+      "type": "number",
+      "format": "float",
+      "maximum": 360,
+      "minimum": 0
+    },
+    "frame_rate_hz": {
+      "type": "integer",
+      "format": "uint8",
+      "key": "value",
+      "minimum": 0
+    },
+    "host_ip": {
+      "type": "string",
+      "format": "ipv4"
+    },
+    "ptp_profile": {
+      "$ref": "#/$defs/PtpProfile"
+    },
+    "return_mode": {
+      "$ref": "#/$defs/ReturnMode"
+    },
+    "sensor_ip": {
+      "type": "string",
+      "format": "ipv4"
+    },
+    "sync_angle_deg": {
+      "type": "number",
+      "format": "float",
+      "maximum": 360,
+      "minimum": 0
+    }
+  },
+  "required": [
+    "host_ip",
+    "sensor_ip",
+    "data_port",
+    "frame_rate_hz",
+    "fov_start_deg",
+    "fov_end_deg",
+    "sync_angle_deg",
+    "cut_angle_deg",
+    "return_mode",
+    "ptp_profile"
+  ],
+  "$defs": {
+    "IEEE1588v2Transport": {
+      "type": "string",
+      "enum": [
+        "L2",
+        "UDPv4",
+        "UDPv6"
+      ]
+    },
+    "PtpProfile": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "IEEE1588v2": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0
+                },
+                "transport": {
+                  "$ref": "#/$defs/IEEE1588v2Transport"
+                }
+              },
+              "required": [
+                "transport",
+                "domain"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "IEEE1588v2"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "IEEE8021AS": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0
+                },
+                "network_supports_tsn": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "domain",
+                "network_supports_tsn"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "IEEE8021AS"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "AUTOMOTIVE": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "integer",
+                  "format": "uint8",
+                  "minimum": 0
+                },
+                "network_supports_tsn": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "domain",
+                "network_supports_tsn"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "AUTOMOTIVE"
+          ]
+        }
+      ]
+    },
+    "ReturnMode": {
+      "type": "string",
+      "enum": [
+        "First",
+        "Strongest",
+        "Last",
+        "LastStrongest",
+        "LastFirst",
+        "FirstStrongest"
+      ]
+    }
+  }
+}

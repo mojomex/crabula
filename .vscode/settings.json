@@ -1,0 +1,9 @@
+{
+  "cSpell.words": [
+    "crabula",
+    "schemars"
+  ],
+  "yaml.schemas": {
+    "OT128.json": "config/OT128.param.yaml"
+  }
+}

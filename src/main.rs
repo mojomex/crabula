@@ -1,50 +1,81 @@
-use std::{
-    fs::File,
-    path::Path,
-};
+use std::{env, fs::File, path::Path, process::exit};
 
-use jsonschema::JSONSchema;
-use serde_json::{json, Value};
+use crabula::{run, sensors, RunError};
 
-const CONFIG_DIR: &str = "/home/maximilianschmeller/crabula/config";
-const SCHEMA_DIR: &str = "/home/maximilianschmeller/crabula/schema";
+use clap::{Parser, Subcommand};
 
-fn main() {
-    let sensor_model = "OT128";
+#[derive(Parser)]
+#[command(author, version, about, long_about = None)]
+#[command(propagate_version = true)]
+struct Cli {
+    #[command(subcommand)]
+    verb: Verb,
+}
 
-    let schema = {
-        let path = Path::new(SCHEMA_DIR)
-            .join(sensor_model.to_owned() + ".json")
-            .canonicalize()
-            .expect("Valid schema path");
-        let file = File::open(&path).expect("Valid file");
-        let mut json: Value = serde_json::from_reader(file).expect("Valid JSON");
-        json["$id"] = json!(&("file://".to_owned() + &path.to_string_lossy().to_string()));
-        JSONSchema::options()
-            .with_draft(jsonschema::Draft::Draft7)
-            .compile(&json)
-            .expect("Valid schema")
-    };
+#[derive(Subcommand)]
+enum Verb {
+    /// List all sensor models
+    List,
+    /// Generates schema files for all sensor configurations in JSON format
+    GenerateSchemas,
+    /// Run Crabula for a given sensor model
+    Run {
+        /// The sensor model to configure Crabula for. List all available models with the list verb
+        sensor_model: String,
+        /// The file containing the sensor's configuration in YAML format
+        config_file: String,
+    },
+}
 
-    let config: Value = {
-        let path = Path::new(CONFIG_DIR).join(sensor_model.to_owned() + ".param.yaml");
-        let file = File::open(path).expect("Valid file");
-        serde_yaml::from_reader(file).expect("Valid YAML")
-    };
+fn main() -> Result<(), RunError>{
+    let cli = Cli::parse();
 
-    if let Err(errors) = schema.validate(&config) {
-        for error in errors {
-            println!("Error {} @ {}", error, error.instance_path);
-        }
-        return;
+    match &cli.verb {
+        Verb::List => Ok(list_models()),
+        Verb::GenerateSchemas => Ok(generate_schemas()),
+        Verb::Run {
+            sensor_model,
+            config_file,
+        } => parse_config_and_run(sensor_model, config_file),
     }
+}
 
-    let config = &config["/**"]["ros__parameters"];
+fn parse_config_and_run(sensor_model: &str, config_file: &str) -> Result<(), RunError> {
+    let open_result = File::open(config_file);
+    let Ok(reader) = open_result else {
+        println!(
+            "Could not open parameter file {}: {}",
+            config_file,
+            open_result.unwrap_err()
+        );
+        exit(1);
+    };
+    let parse_result = serde_yaml::from_reader(reader);
+    let Ok(config) = parse_result else {
+        println!(
+            "Could not parse parameter file {}: {}",
+            config_file,
+            parse_result.unwrap_err()
+        );
+        exit(1)
+    };
 
-    // Config is valid
-    let sensor_ip = config["sensor_ip"].as_str().expect("Valid sensor IP");
-    let host_ip = config["host_ip"].as_str().expect("Valid host IP");
-    let data_port = config["data_port"].as_u64().expect("Valid data port");
+    run(sensor_model, config)
+}
 
-    println!("Connecting to sensor @ {sensor_ip}:{data_port} from {host_ip}");
+fn list_models() {
+    println!("The following sensors are supported:");
+    for sensor in sensors::SENSORS {
+        println!("- {sensor}");
+    }
+}
+
+fn generate_schemas() {
+    for sensor in sensors::SENSORS {
+        let schema = sensors::get_schema(sensor).expect("sensor DB listed sensor without schema");
+        let file =
+            File::create(Path::new(&format!("{sensor}.json"))).expect("file should be creatable");
+        serde_json::to_writer_pretty(file, &schema)
+            .expect("JSON schema should be serializable to file");
+    }
 }
