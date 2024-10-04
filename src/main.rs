@@ -1,4 +1,4 @@
-use std::{env, fs::File, path::Path, process::exit};
+use std::{fs::File, path::Path, process::exit};
 
 use crabula::{run, sensors, RunError};
 

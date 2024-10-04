@@ -6,6 +6,8 @@ use serde::{Deserialize, Serialize};
 use crate::sensor::{ConfigurationError, Sensor};
 use std::net::Ipv4Addr;
 
+mod packet;
+
 pub struct OT128;
 
 impl Sensor for OT128 {
@@ -17,7 +19,7 @@ impl Sensor for OT128 {
         schema_for!(Config)
     }
 
-    fn configure(&self, config: &serde_json::Value) -> Result<(), ConfigurationError> {
+    fn configure(&mut self, config: &serde_json::Value) -> Result<(), ConfigurationError> {
         let schema = JSONSchema::compile(&OT128::get_config_schema().to_value())
             .expect("config schema should be valid");
 

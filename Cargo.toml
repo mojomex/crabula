@@ -16,4 +16,6 @@ schemars = "1.0.0-alpha.3"
 serde = "1.0.208"
 serde_json = { verison = "1.0.118", features = ["std"] }
 serde_yaml = "0.9.34"
+static_assertions = "1.1.0"
 thiserror = "1.0.63"
+zerocopy = { version = "0.7.35", features = ["derive"] }

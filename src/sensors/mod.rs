@@ -1,8 +1,8 @@
-mod ot128;
+mod hesai;
 
 use std::fmt::Display;
 
-use ot128::OT128;
+use hesai::ot128::OT128;
 use schemars::Schema;
 use thiserror::Error;
 

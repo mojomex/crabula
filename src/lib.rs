@@ -16,7 +16,7 @@ pub enum RunError {
 }
 
 pub fn run(sensor_model: &str, config: Value) -> Result<(), RunError> {
-    let sensor = get_sensor(sensor_model)?;
+    let mut sensor = get_sensor(sensor_model)?;
     sensor.configure(&config)?;
 
     Ok(())

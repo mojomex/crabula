@@ -1,10 +1,10 @@
 use crate::sensor::Sensor;
 
-struct Backbone {
-  sensor: dyn Sensor,
+struct Backbone<T: Sensor> {
+  sensor: T,
 }
 
-impl Backbone {
+impl <T: Sensor> Backbone<T> {
     fn spin(&self) {
     }
 }
