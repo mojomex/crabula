@@ -1,21 +1,3 @@
-[package]
-name = "crabula"
-version = "0.1.0"
-edition = "2021"
-
-default-run = "crabula"
-
-[dependencies]
-clap = "4.5.16"
-jsonschema = { verison = "0.18.0", features = ["resolve-file"] }
-num-derive = "0.4.2"
-num-traits = "0.2.19"
-once_cell = "1.19.0"
-regex = "1.10.6"
-schemars = "1.0.0-alpha.3"
-serde = "1.0.208"
-serde_json = { verison = "1.0.118", features = ["std"] }
-serde_yaml = "0.9.34"
-static_assertions = "1.1.0"
-thiserror = "1.0.63"
-zerocopy = { version = "0.7.35", features = ["derive"] }
+[workspace]
+members = ["crabula_core", "crabula_cli", "crabula_hesai", "crabula_hesai_ot128"]
+resolver = "2"

@@ -1,0 +1,8 @@
+[package]
+name = "crabula_hesai"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+static_assertions = "1.1.0"
+zerocopy = { version = "0.7.35", features = ["derive"] }

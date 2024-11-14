@@ -3,7 +3,7 @@ use num_derive::{FromPrimitive, ToPrimitive};
 use schemars::{schema_for, JsonSchema, Schema};
 use serde::{Deserialize, Serialize};
 
-use crate::sensor::{ConfigurationError, Sensor};
+use crabula_core::sensor::{ConfigurationError, Sensor};
 use std::net::Ipv4Addr;
 
 mod packet;

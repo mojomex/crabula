@@ -1,6 +1,6 @@
 use std::{fs::File, path::Path, process::exit};
 
-use crabula::{run, sensors, RunError};
+use crabula_core::{run, sensors, RunError};
 
 use clap::{Parser, Subcommand};
 

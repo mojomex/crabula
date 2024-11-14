@@ -2,7 +2,7 @@ use static_assertions::assert_eq_size;
 use zerocopy::{AsBytes, FromBytes, FromZeroes, Unaligned};
 use zerocopy::little_endian as le;
 
-use crate::sensors::hesai::packet::{Block, Body, DateTime, Header12B, Unit3B};
+use crabula_hesai::packet::{Block, Body, DateTime, Header12B, Unit3B};
 
 #[derive(FromBytes, FromZeroes, AsBytes, Unaligned)]
 #[repr(C)]
