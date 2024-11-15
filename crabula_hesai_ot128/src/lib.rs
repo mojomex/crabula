@@ -3,24 +3,27 @@ use num_derive::{FromPrimitive, ToPrimitive};
 use schemars::{schema_for, JsonSchema, Schema};
 use serde::{Deserialize, Serialize};
 
-use crabula_core::sensor::{ConfigurationError, Sensor};
+use crabula_core::sensor::{ConfigurationError, Sensor, SensorManifest};
 use std::net::Ipv4Addr;
 
 mod packet;
 
 pub struct OT128;
+pub struct OT128Manifest;
+
+impl SensorManifest for OT128Manifest {
+    fn get_config_schema(&self) -> Schema {
+        schema_for!(Config)
+    }
+}
 
 impl Sensor for OT128 {
     fn new() -> OT128 {
         OT128 {}
     }
 
-    fn get_config_schema() -> Schema {
-        schema_for!(Config)
-    }
-
     fn configure(&mut self, config: &serde_json::Value) -> Result<(), ConfigurationError> {
-        let schema = JSONSchema::compile(&OT128::get_config_schema().to_value())
+        let schema = JSONSchema::compile(&OT128Manifest.get_config_schema().to_value())
             .expect("config schema should be valid");
 
         let validation_result = schema.validate(config);

@@ -5,9 +5,11 @@ edition = "2021"
 
 [dependencies]
 crabula_core = { path = "../crabula_core" }
+crabula_registry = { path = "../crabula_registry" }
 clap = "4.5.16"
 schemars = "1.0.0-alpha.3"
 serde = "1.0.208"
 serde_json = { version = "1.0.118", features = ["std"] }
 serde_yaml = "0.9.34"
 thiserror = "1.0.63"
+anyhow = "1.0.93"

@@ -17,13 +17,15 @@ impl Display for ConfigurationError {
     }
 }
 
+pub trait SensorManifest {
+    fn get_config_schema(&self) -> Schema;
+}
+
 pub trait Sensor {
     fn new() -> Self
     where
         Self: Sized;
-    fn get_config_schema() -> Schema
-    where
-        Self: Sized;
+
     fn configure(&mut self, config: &serde_json::Value) -> Result<(), ConfigurationError>;
 }
 

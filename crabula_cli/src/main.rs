@@ -1,8 +1,11 @@
 use std::{fs::File, path::Path, process::exit};
 
-use crabula_core::{run, sensors, RunError};
+use crabula_core::run;
 
 use clap::{Parser, Subcommand};
+use crabula_registry::{Registry, SensorNotFoundError, StaticRegistry};
+
+use anyhow::Result;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -27,20 +30,26 @@ enum Verb {
     },
 }
 
-fn main() -> Result<(), RunError>{
+fn main() -> Result<()> {
     let cli = Cli::parse();
 
+    let registry = StaticRegistry;
+
     match &cli.verb {
-        Verb::List => Ok(list_models()),
-        Verb::GenerateSchemas => Ok(generate_schemas()),
+        Verb::List => Ok(list_models(&registry)),
+        Verb::GenerateSchemas => generate_schemas(&registry),
         Verb::Run {
             sensor_model,
             config_file,
-        } => parse_config_and_run(sensor_model, config_file),
+        } => parse_config_and_run(&registry, sensor_model, config_file),
     }
 }
 
-fn parse_config_and_run(sensor_model: &str, config_file: &str) -> Result<(), RunError> {
+fn parse_config_and_run(
+    registry: &dyn Registry,
+    sensor_model: &str,
+    config_file: &str,
+) -> Result<()> {
     let open_result = File::open(config_file);
     let Ok(reader) = open_result else {
         println!(
@@ -60,22 +69,24 @@ fn parse_config_and_run(sensor_model: &str, config_file: &str) -> Result<(), Run
         exit(1)
     };
 
-    run(sensor_model, config)
+    run(sensor_model, config)?;
+    Ok(())
 }
 
-fn list_models() {
+fn list_models(registry: &dyn Registry) {
     println!("The following sensors are supported:");
-    for sensor in sensors::SENSORS {
-        println!("- {sensor}");
+    for model in registry.get_sensor_models() {
+        println!("- {model}");
     }
 }
 
-fn generate_schemas() {
-    for sensor in sensors::SENSORS {
-        let schema = sensors::get_schema(sensor).expect("sensor DB listed sensor without schema");
-        let file =
-            File::create(Path::new(&format!("{sensor}.json"))).expect("file should be creatable");
-        serde_json::to_writer_pretty(file, &schema)
-            .expect("JSON schema should be serializable to file");
+fn generate_schemas(registry: &dyn Registry) -> Result<()> {
+    for model in registry.get_sensor_models() {
+        let manifest = registry.get_manifest(model)?;
+        let schema = (*manifest).get_config_schema();
+        let file = File::create(Path::new(&format!("{model}.json")))?;
+        serde_json::to_writer_pretty(file, &schema)?;
     }
+
+    Ok(())
 }

@@ -1,0 +1,12 @@
+[package]
+name = "crabula_registry"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+crabula_core = {path = "../crabula_core"}
+schemars = "1.0.0-alpha.3"
+
+
+crabula_hesai_ot128 = {path = "../crabula_hesai_ot128"}
+thiserror = "2.0.3"
