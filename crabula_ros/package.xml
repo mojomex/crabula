@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>crabula</name>
+  <name>crabula_ros</name>
   <version>0.0.0</version>
   <description>Nebula, but crabbier.</description>
   <maintainer email="max.schmeller@tier4.jp">Max Schmeller</maintainer>
   <license>Apache License 2.0</license>
 
   <depend>sensor_msgs</depend>
+  <depend>nebula_msgs</depend>
+  <depend>standard_msgs</depend>
+  <depend>builtin_interfaces</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

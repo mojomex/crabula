@@ -9,3 +9,12 @@ num-traits = "0.2.19"
 once_cell = "1.19.0"
 regex = "1.10.6"
 safe_drive = "0.4.3"
+nebula_msgs = { path = "/home/maxschmeller/msgs/nebula_msgs" }
+sensor_msgs = { path = "/home/maxschmeller/msgs/sensor_msgs" }
+std_msgs = { path = "/home/maxschmeller/msgs/std_msgs" }
+builtin_interfaces = { path = "/home/maxschmeller/msgs/builtin_interfaces" }
+
+[package.metadata.ros]
+msg = ["nebula_msgs", "sensor_msgs", "std_msgs", "builtin_interfaces"]
+msg_dir = "/home/maxschmeller/msgs"
+safe_drive_version = "0.4"

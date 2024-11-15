@@ -144,6 +144,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b048fb63fd8b5923fc5aa7b340d8e156aec7ec02f0c78fa8a6ddc2613f6f71de"
 
 [[package]]
+name = "builtin_interfaces"
+version = "0.2.1"
+dependencies = [
+ "safe_drive",
+]
+
+[[package]]
 name = "bumpalo"
 version = "3.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -285,11 +292,15 @@ dependencies = [
 name = "crabula_ros"
 version = "0.1.0"
 dependencies = [
+ "builtin_interfaces",
+ "nebula_msgs",
  "num-derive",
  "num-traits",
  "once_cell",
  "regex",
  "safe_drive",
+ "sensor_msgs",
+ "std_msgs",
 ]
 
 [[package]]
@@ -462,6 +473,14 @@ dependencies = [
  "pin-project-lite",
  "pin-utils",
  "slab",
+]
+
+[[package]]
+name = "geometry_msgs"
+version = "0.2.1"
+dependencies = [
+ "safe_drive",
+ "std_msgs",
 ]
 
 [[package]]
@@ -868,6 +887,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "nebula_msgs"
+version = "0.2.1"
+dependencies = [
+ "builtin_interfaces",
+ "safe_drive",
+ "std_msgs",
+]
+
+[[package]]
 name = "nom"
 version = "7.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1229,6 +1257,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 
 [[package]]
+name = "sensor_msgs"
+version = "0.2.1"
+dependencies = [
+ "builtin_interfaces",
+ "geometry_msgs",
+ "safe_drive",
+ "std_msgs",
+]
+
+[[package]]
 name = "serde"
 version = "1.0.215"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1351,6 +1389,14 @@ name = "static_assertions"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
+
+[[package]]
+name = "std_msgs"
+version = "0.2.1"
+dependencies = [
+ "builtin_interfaces",
+ "safe_drive",
+]
 
 [[package]]
 name = "strsim"

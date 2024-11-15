@@ -1,9 +1,13 @@
 {
-  "cSpell.words": [
-    "crabula",
-    "schemars"
+  "ros.distro": "humble",
+  "python.autoComplete.extraPaths": [
+    "/home/maxschmeller/crabula/install/nebula_msgs/local/lib/python3.10/dist-packages",
+    "/opt/ros/humble/lib/python3.10/site-packages",
+    "/opt/ros/humble/local/lib/python3.10/dist-packages"
   ],
-  "yaml.schemas": {
-    "OT128.json": "config/OT128.param.yaml"
-  }
+  "python.analysis.extraPaths": [
+    "/home/maxschmeller/crabula/install/nebula_msgs/local/lib/python3.10/dist-packages",
+    "/opt/ros/humble/lib/python3.10/site-packages",
+    "/opt/ros/humble/local/lib/python3.10/dist-packages"
+  ]
 }

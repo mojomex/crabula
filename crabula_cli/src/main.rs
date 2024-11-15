@@ -3,7 +3,7 @@ use std::{fs::File, path::Path, process::exit};
 use crabula_core::run;
 
 use clap::{Parser, Subcommand};
-use crabula_registry::{Registry, SensorNotFoundError, StaticRegistry};
+use crabula_registry::{Registry, StaticRegistry};
 
 use anyhow::Result;
 
